@@ -1,0 +1,60 @@
+{
+  "accountId": "1000",
+  "anonymizeIP": true,
+  "attributes": [],
+  "audiences": [],
+  "rollouts": [],
+  "events": [],
+  "experiments": [],
+  "featureFlags": [
+    {
+      "experimentIds": [],
+      "id": "2000",
+      "key": "test_feature",
+      "rolloutId": "",
+      "variables": [
+        {
+          "defaultValue": "true",
+          "id": "1",
+          "key": "test_string_no_default",
+          "type": "string"
+        },
+        {
+          "defaultValue": "true",
+          "id": "1",
+          "key": "test_string",
+          "type": "string"
+        },
+        {
+          "defaultValue": "1",
+          "id": "2",
+          "key": "test_double",
+          "type": "double"
+        },
+        {
+          "defaultValue": "false",
+          "id": "3",
+          "key": "test_boolean",
+          "type": "boolean"
+        },
+        {
+          "defaultValue": "false",
+          "id": "3",
+          "key": "test_integer",
+          "type": "integer"
+        },
+        {
+          "defaultValue": "false",
+          "id": "3",
+          "key": "test_enum",
+          "type": "string"
+        }
+      ]
+    }
+  ],
+  "groups": [],
+  "projectId": [],
+  "revision": "1",
+  "variables": [],
+  "version": "4"
+}

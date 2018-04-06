@@ -1,0 +1,116 @@
+buildscript {
+    ext {
+        deps = [
+                researchGateReleaseVersion: '2.3.4',
+                logbackVersion: '1.1.7',
+                slf4jVersion: '1.7.16',
+                coreApi: '2.0.0-beta2',
+                junitVersion: '4.11',
+                mockitoVersion: '1.9.5',
+                guavaVersion: '23.0',
+                reflectionsVersion: '0.9.9-RC1',
+                jacksonVersion: '2.5.1'
+        ]
+
+        mavenS3Bucket = 'optimizely-maven'
+    }
+
+    repositories {
+        mavenLocal()
+        mavenCentral()
+        jcenter()
+        maven {
+            url "s3://$mavenS3Bucket"
+            credentials(AwsCredentials) {}
+        }
+    }
+
+    dependencies {
+        classpath group: 'net.researchgate', name: 'gradle-release', version: deps.researchGateReleaseVersion
+    }
+}
+
+apply plugin: 'idea'
+
+subprojects {
+    apply plugin: 'idea'
+    apply plugin: 'java'
+    apply plugin: 'maven-publish'
+    apply plugin: 'net.researchgate.release'
+
+    sourceCompatibility = 1.8
+    targetCompatibility = 1.8
+
+    group = 'com.optimizely.ab'
+
+    release {
+        tagTemplate = '$name-$version'
+        newVersionCommitMessage = '[Gradle Release Plugin][ci skip] - new version commit: '
+    }
+
+    repositories {
+        mavenLocal()
+        mavenCentral()
+        jcenter()
+        maven {
+            url "s3://$mavenS3Bucket"
+            credentials(AwsCredentials) {}
+        }
+    }
+
+    publishing {
+        repositories {
+            maven {
+                url "s3://$mavenS3Bucket"
+                credentials(AwsCredentials) {}  // relies on custom gradle with AWS default credentials chain support
+            }
+        }
+
+        if (System.env.TRAVIS.asBoolean() && !System.env.TRAVIS_PULL_REQUEST.asBoolean()) {
+            // version = 1.0.0-PR-200.318
+            version = "${version}-PR-${System.env.TRAVIS_PULL_REQUEST}.${System.env.TRAVIS_BUILD_NUMBER}"
+        }
+
+        publications {
+            mavenJava(MavenPublication) {
+                from components.java
+                artifact sourcesJar
+                artifact javadocJar
+            }
+        }
+    }
+
+    dependencies {
+        compile group: 'com.optimizely.ab', name: 'core-api', version: deps.coreApi
+        compile group: 'org.reflections', name: 'reflections', version: deps.reflectionsVersion
+        compile group: 'org.slf4j', name: 'slf4j-api', version: deps.slf4jVersion
+        compile group: 'ch.qos.logback', name: 'logback-classic', version: deps.logbackVersion
+
+        testCompile group: 'junit', name: 'junit', version: deps.junitVersion
+        testCompile group: 'org.mockito', name: 'mockito-all', version: deps.mockitoVersion
+        testCompile group: 'com.google.guava', name: 'guava', version: deps.guava
+        testCompile group: 'com.fasterxml.jackson.datatype', name: 'jackson-datatype-json-org', version: deps.jacksonVersion
+    }
+
+    task sourcesJar(type: Jar, dependsOn: classes) {
+        classifier = 'sources'
+        from sourceSets.main.allSource
+    }
+
+    task javadocJar(type: Jar, dependsOn: javadoc) {
+        classifier = 'javadoc'
+        from javadoc.destinationDir
+    }
+
+    artifacts {
+        archives sourcesJar, javadocJar
+    }
+
+    task printVersion << {
+        println project.version
+    }
+}
+
+wrapper {
+    distributionUrl = 'https://github.com/optimizely/gradle/releases/download/REL_OPT_2.13-20160520192614%2B0000/gradle-2.13-20160520192614.0000-bin.zip'
+}
