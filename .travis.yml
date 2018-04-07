@@ -1,0 +1,27 @@
+language: java
+jdk:
+- oraclejdk8
+install:
+# disable daemon and parrallelism for a more stable build
+- ./gradlew --no-daemon --max-workers 1 assemble
+script: ./travis-force-deploy.sh
+cache:
+  directories:
+  - $HOME/.gradle/caches
+  - $HOME/.gradle/wrapper
+before_cache:
+- rm $HOME/.gradle/caches/modules-2/modules-2.lock
+- rm $HOME/.gradle/caches/*/plugin-resolution/cache.properties.lock
+- rm $HOME/.gradle/caches/*/plugin-resolution/cache.properties
+dist: trusty
+branches:
+  only:
+  - master
+deploy:
+  provider: script
+  script: ./travis-deploy.sh
+  skip_cleanup: true
+  on:
+    branch: master
+after_success:
+  - ./gradlew jacocoTestReport coveralls

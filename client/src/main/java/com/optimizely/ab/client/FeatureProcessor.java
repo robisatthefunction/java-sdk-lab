@@ -1,4 +1,4 @@
-package com.optimizely.ab;
+package com.optimizely.ab.client;
 
 import com.optimizely.ab.annotations.OptimizelyFeature;
 import com.optimizely.ab.annotations.OptimizelyVariable;
@@ -39,11 +39,11 @@ public class FeatureProcessor<T> {
         this.fields = processFields(clazz);
     }
 
-    Map<Field, OptimizelyVariable> getFieldVariableMap() {
+    public Map<Field, OptimizelyVariable> getFieldVariableMap() {
         return fields;
     }
 
-    OptimizelyFeature getOptimizelyFeature() {
+    public OptimizelyFeature getOptimizelyFeature() {
         return optimizelyFeature;
     }
 

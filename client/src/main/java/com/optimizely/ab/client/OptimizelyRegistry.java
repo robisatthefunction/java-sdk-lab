@@ -1,4 +1,4 @@
-package com.optimizely.ab;
+package com.optimizely.ab.client;
 
 import com.optimizely.ab.annotations.OptimizelyFeature;
 import org.reflections.Reflections;
@@ -22,6 +22,7 @@ public class OptimizelyRegistry {
      * with all classes annotated with {@link OptimizelyFeature}. Since this
      * scans the entire class path its important that this method be called
      * conservatively.
+     * @return OptimizelyRegistry
      */
     public static OptimizelyRegistry get() {
         OptimizelyRegistry registry = new OptimizelyRegistry();

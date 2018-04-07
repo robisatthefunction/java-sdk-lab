@@ -1,4 +1,4 @@
-package com.optimizely.ab;
+package com.optimizely.ab.client;
 
 import com.optimizely.ab.config.Variation;
 

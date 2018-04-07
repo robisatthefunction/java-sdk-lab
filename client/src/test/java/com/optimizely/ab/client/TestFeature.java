@@ -1,7 +1,8 @@
-package com.optimizely.ab;
+package com.optimizely.ab.client;
 
 import com.google.common.base.Charsets;
 import com.google.common.io.Resources;
+import com.optimizely.ab.Optimizely;
 import com.optimizely.ab.annotations.OptimizelyFeature;
 import com.optimizely.ab.annotations.OptimizelyVariable;
 import com.optimizely.ab.config.parser.ConfigParseException;

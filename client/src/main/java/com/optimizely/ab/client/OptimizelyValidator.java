@@ -1,5 +1,6 @@
-package com.optimizely.ab;
+package com.optimizely.ab.client;
 
+import com.optimizely.ab.Optimizely;
 import com.optimizely.ab.annotations.OptimizelyFeature;
 import com.optimizely.ab.annotations.OptimizelyVariable;
 import com.optimizely.ab.config.FeatureFlag;

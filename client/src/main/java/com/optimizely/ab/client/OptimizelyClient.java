@@ -1,4 +1,4 @@
-package com.optimizely.ab;
+package com.optimizely.ab.client;
 
 import com.optimizely.ab.config.Variation;
 
@@ -11,7 +11,6 @@ import java.util.Map;
 public interface OptimizelyClient {
     // TODO move me somewhere less general
     String OPTIMIZELY_END_USER_ID_KEY = "optimizelyEndUserId";
-    String LAYER_ID_KEY = "layerId";
 
     Variation activate(String experimentKey, String userIdKey);
 

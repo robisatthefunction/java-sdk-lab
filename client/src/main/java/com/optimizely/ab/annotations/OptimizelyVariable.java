@@ -12,16 +12,19 @@ public @interface OptimizelyVariable {
 
     /**
      * name used for the variable as part of the optimizely data file
+     * @return String
      */
     String name();
 
     /**
      * Default value
+     * @return String
      */
     String defaultValue() default UNASSIGNED;
 
     /**
      * Provider used to convert the value into the corresponding data type
+     * @return Class
      * TODO - IMPLEMENT ME
      */
     Class provider() default Void.class;

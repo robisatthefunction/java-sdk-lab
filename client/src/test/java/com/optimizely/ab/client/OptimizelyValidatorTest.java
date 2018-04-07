@@ -1,5 +1,6 @@
-package com.optimizely.ab;
+package com.optimizely.ab.client;
 
+import com.optimizely.ab.Optimizely;
 import com.optimizely.ab.annotations.OptimizelyFeature;
 import com.optimizely.ab.annotations.OptimizelyVariable;
 import org.junit.Before;
@@ -31,7 +32,7 @@ public class OptimizelyValidatorTest {
 
     @Test
     public void validateTestFeature() throws Exception {
-        registry.register(com.optimizely.ab.TestFeature.class);
+        registry.register(TestFeature.class);
         assertTrue(validator.validate(optimizely));
     }
 

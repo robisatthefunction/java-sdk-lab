@@ -1,5 +1,6 @@
-package com.optimizely.ab;
+package com.optimizely.ab.client;
 
+import com.optimizely.ab.Optimizely;
 import com.optimizely.ab.config.Variation;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

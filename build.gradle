@@ -1,15 +1,16 @@
 buildscript {
     ext {
         deps = [
-                researchGateReleaseVersion: '2.3.4',
-                logbackVersion: '1.1.7',
-                slf4jVersion: '1.7.16',
                 coreApi: '2.0.0-beta2',
-                junitVersion: '4.11',
-                mockitoVersion: '1.9.5',
+                coverallsVersion: '2.0.1',
                 guavaVersion: '23.0',
+                jacksonVersion: '2.5.1',
+                junitVersion: '4.11',
+                logbackVersion: '1.1.7',
+                mockitoVersion: '1.9.5',
                 reflectionsVersion: '0.9.9-RC1',
-                jacksonVersion: '2.5.1'
+                researchGateReleaseVersion: '2.3.4',
+                slf4jVersion: '1.7.16',
         ]
 
         mavenS3Bucket = 'optimizely-maven'
@@ -27,14 +28,18 @@ buildscript {
 
     dependencies {
         classpath group: 'net.researchgate', name: 'gradle-release', version: deps.researchGateReleaseVersion
+        classpath group:'org.kt3k.gradle.plugin', name: 'coveralls-gradle-plugin', version: deps.coverallsVersion
     }
 }
 
 apply plugin: 'idea'
 
 subprojects {
+    apply plugin: 'com.github.kt3k.coveralls'
     apply plugin: 'idea'
     apply plugin: 'java'
+    apply plugin: 'jacoco'
+    apply plugin: 'findbugs'
     apply plugin: 'maven-publish'
     apply plugin: 'net.researchgate.release'
 
@@ -77,6 +82,20 @@ subprojects {
                 artifact sourcesJar
                 artifact javadocJar
             }
+        }
+    }
+    
+    tasks.withType(FindBugs) {
+        reports {
+            xml.enabled = false
+            html.enabled = true
+        }
+    }
+
+    jacocoTestReport {
+        reports {
+            xml.enabled = true // coveralls plugin depends on xml format report
+            html.enabled = true
         }
     }
 

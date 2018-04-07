@@ -1,4 +1,4 @@
-package com.optimizely.ab;
+package com.optimizely.ab.client;
 
 /**
  * Simple provider interface for the OptimizelyClient.

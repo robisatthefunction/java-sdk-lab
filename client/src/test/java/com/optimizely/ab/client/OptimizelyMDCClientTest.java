@@ -1,10 +1,12 @@
-package com.optimizely.ab;
+package com.optimizely.ab.client;
 
+import com.optimizely.ab.Optimizely;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.mockito.Matchers;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.runners.MockitoJUnitRunner;
@@ -14,8 +16,8 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 
-import static com.optimizely.ab.OptimizelyClient.OPTIMIZELY_END_USER_ID_KEY;
-import static com.optimizely.ab.OptimizelyMDCClient.USER_IDS_KEY;
+import static com.optimizely.ab.client.OptimizelyClient.OPTIMIZELY_END_USER_ID_KEY;
+import static com.optimizely.ab.client.OptimizelyMDCClient.USER_IDS_KEY;
 import static junit.framework.TestCase.assertNull;
 import static org.junit.Assert.assertNotNull;
 
@@ -65,8 +67,6 @@ public class OptimizelyMDCClientTest {
     @Test
     public void testDoesNotTrackTrack() {
         optimizelyClient.track("MY_REVENUE_EVENT");
-
-        Map<String, Long> tags = Collections.emptyMap();
         Mockito.verify(optimizely, Mockito.never()).track(Mockito.anyString(), Mockito.anyString());
     }
 
@@ -131,21 +131,21 @@ public class OptimizelyMDCClientTest {
 
     @Test
     public void testGetFeatureVariableEnumPositive() {
-        Mockito.when(optimizely.getFeatureVariableString(Mockito.anyString(), Mockito.anyString(), Mockito.anyString(), Mockito.any(Map.class))).thenReturn("VALID");
+        Mockito.when(optimizely.getFeatureVariableString(Mockito.anyString(), Mockito.anyString(), Mockito.anyString(), Matchers.any())).thenReturn("VALID");
         TestEnum actual = optimizelyClient.getFeatureVariable(FEATURE_FLAG_KEY, FEATURE_VARIABLE_KEY, OPTIMIZELY_END_USER_ID_KEY, TestEnum.class);
         Assert.assertEquals("cache mode returned does not match", TestEnum.VALID, actual);
     }
 
     @Test
     public void testGetFeatureVariableEnumNegative() {
-        Mockito.when(optimizely.getFeatureVariableString(Mockito.anyString(), Mockito.anyString(), Mockito.anyString(), Mockito.any(Map.class))).thenReturn("NOT_VALID");
+        Mockito.when(optimizely.getFeatureVariableString(Mockito.anyString(), Mockito.anyString(), Mockito.anyString(), Matchers.any())).thenReturn("NOT_VALID");
         TestEnum actual = optimizelyClient.getFeatureVariable(FEATURE_FLAG_KEY, FEATURE_VARIABLE_KEY, OPTIMIZELY_END_USER_ID_KEY, TestEnum.class);
         Assert.assertNull(actual);
     }
 
     @Test
     public void testGetFeatureVariableEnumNullReturnedFromSDK() {
-        Mockito.when(optimizely.getFeatureVariableString(Mockito.anyString(), Mockito.anyString(), Mockito.anyString(), Mockito.any(Map.class))).thenReturn(null);
+        Mockito.when(optimizely.getFeatureVariableString(Mockito.anyString(), Mockito.anyString(), Mockito.anyString(), Matchers.any())).thenReturn(null);
         TestEnum actual = optimizelyClient.getFeatureVariable(FEATURE_FLAG_KEY, FEATURE_VARIABLE_KEY, OPTIMIZELY_END_USER_ID_KEY, TestEnum.class);
         assertNull(actual);
     }
