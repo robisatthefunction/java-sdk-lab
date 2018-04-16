@@ -67,5 +67,4 @@ public class OptimizelyValidatorTest {
     @OptimizelyFeature(name = "test_missing_feature", userIdKey = "test_key", validate = false)
     public static class TestFeatureMissingDoNotValidate {
     }
-
 }

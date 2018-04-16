@@ -39,4 +39,11 @@ public class OptimizelyRegistryTest {
         assertNotNull(featureProcessor);
     }
 
+    @Test
+    public void testAutoRegistration() throws Exception {
+        OptimizelyRegistry optimizelyRegistry = OptimizelyRegistry.get();
+
+        FeatureProcessor<TestFeature> featureProcessor = optimizelyRegistry.get(TestFeature.class);
+        assertNotNull(featureProcessor);
+    }
 }

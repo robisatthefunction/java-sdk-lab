@@ -70,5 +70,4 @@ public class FeatureProcessorTest {
     public enum TestEnum {
         VALUE_1, VALUE_2
     }
-
 }

@@ -19,6 +19,7 @@ import java.util.Map;
 import static com.optimizely.ab.client.OptimizelyClient.OPTIMIZELY_END_USER_ID_KEY;
 import static com.optimizely.ab.client.OptimizelyMDCClient.USER_IDS_KEY;
 import static junit.framework.TestCase.assertNull;
+import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotNull;
 
 /**
@@ -183,5 +184,19 @@ public class OptimizelyMDCClientTest {
 
     public enum TestEnum {
         VALID
+    }
+
+    @Test
+    public void testNullOptimizely() {
+        OptimizelyRegistry registry = new OptimizelyRegistry();
+        optimizelyClient = new OptimizelyMDCClient(null, registry);
+
+        MDC.put(USER_IDS_KEY, END_USER_ID);
+
+        assertNull(optimizelyClient.activate("test", OPTIMIZELY_END_USER_ID_KEY));
+        optimizelyClient.track("test", new HashMap<>());
+        assertFalse(optimizelyClient.isFeatureEnabled("test", OPTIMIZELY_END_USER_ID_KEY));
+
+        assertNull(optimizelyClient.getFeatureVariable(null, null, null, null));
     }
 }
