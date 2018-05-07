@@ -10,7 +10,7 @@ import java.lang.annotation.Target;
  */
 @Target(value = ElementType.TYPE)
 @Retention(value = RetentionPolicy.RUNTIME)
-public @interface OptimizelyFeature {
+public @interface OptimizelyVariation {
     /**
      * Name of the feature as implemented within the Optimizely data file.
      * @return String
@@ -18,20 +18,9 @@ public @interface OptimizelyFeature {
     String name();
 
     /**
-     * Store key to use for the bucketing id.
-     * @return String
-     */
-    String userIdKey() default "optimizelyEndUserId";
-
-    /**
-     * Indicate whether or not to validate the instance of Optimizely against this feature.
+     * Is this variation the baseline variation?
      * @return boolean
+     * TODO - IMPLEMENT ME
      */
-    boolean validate() default true;
-
-    /**
-     * When using experimentation, which variable maps to a {@link OptimizelyVariation} name
-     * @return String
-     */
-    String variationKey() default "variation_key";
+    boolean baseline() default false;
 }

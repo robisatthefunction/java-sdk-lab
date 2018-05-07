@@ -1,0 +1,152 @@
+{
+  "accountId": "1000",
+  "anonymizeIP": true,
+  "attributes": [
+    {
+      "id": "10",
+      "key": "user_key"
+    },
+    {
+      "id": "20",
+      "key": "userIds"
+    },
+    {
+      "id": "20",
+      "key": "optimizelyEndUserId"
+    }
+  ],
+  "audiences": [],
+  "rollouts": [],
+  "events": [
+    {
+      "id": "500",
+      "key": "success",
+      "experimentIds": ["10", "20"]
+    }
+  ],
+  "experiments": [
+    {
+      "id": "10",
+      "key": "email_message_experiment",
+      "layerId": "400",
+      "status": "Running",
+      "variations": [
+        {
+          "id": "400",
+          "key": "variation_one",
+          "featureEnabled": true,
+          "variables": []
+        },
+        {
+          "id": "401",
+          "key": "variation_two",
+          "featureEnabled": true,
+          "variables": [
+            {
+              "id": "2001",
+              "value": "[ACTION REQUIRED] One more step."
+            },
+            {
+              "id": "2002",
+              "value": "Sign-in to start experimenting."
+            }
+          ]
+        }
+      ],
+      "trafficAllocation": [
+        {
+          "entityId": "400",
+          "endOfRange": 5000
+        },
+        {
+          "entityId": "401",
+          "endOfRange": 10000
+        }
+      ],
+      "audienceIds": [],
+      "forcedVariations": {}
+    },
+    {
+      "id": "20",
+      "key": "email_sender_experiment",
+      "layerId": "300",
+      "status": "Running",
+      "variations": [
+        {
+          "id": "300",
+          "key": "variation_one",
+          "featureEnabled": true,
+          "variables": [
+            {
+              "id": "3001",
+              "value": "info"
+            }
+          ]
+        },
+        {
+          "id": "301",
+          "key": "variation_two",
+          "variables": [
+            {
+              "id": "3001",
+              "value": "warn"
+            }
+          ]
+        }
+      ],
+      "trafficAllocation": [
+        {
+          "entityId": "300",
+          "endOfRange": 5000
+        },
+        {
+          "entityId": "301",
+          "endOfRange": 10000
+        }
+      ],
+      "audienceIds": [],
+      "forcedVariations": {}
+    }
+  ],
+  "featureFlags": [
+    {
+      "experimentIds": ["10"],
+      "id": "2000",
+      "key": "welcome_email",
+      "rolloutId": "",
+      "variables": [
+        {
+          "defaultValue": "Welcome to Optimizely",
+          "id": "2001",
+          "key": "subject_key",
+          "type": "string"
+        },
+        {
+          "defaultValue": "Click <a href=\"app.optimizely.com/signin\">here<\\a> now!!",
+          "id": "2002",
+          "key": "body_key",
+          "type": "string"
+        }
+      ]
+    },
+    {
+      "experimentIds": ["20"],
+      "id": "3000",
+      "key": "email_sender",
+      "rolloutId": "",
+      "variables": [
+        {
+          "defaultValue": "info",
+          "id": "3001",
+          "key": "variation_key",
+          "type": "string"
+        }
+      ]
+    }
+  ],
+  "groups": [],
+  "projectId": [],
+  "revision": "1",
+  "variables": [],
+  "version": "4"
+}

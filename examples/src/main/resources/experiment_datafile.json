@@ -1,14 +1,23 @@
 {
   "accountId": "1000",
   "anonymizeIP": true,
-  "attributes": [],
+  "attributes": [
+    {
+      "id": "10",
+      "key": "user_key"
+    },
+    {
+      "id": "20",
+      "key": "userIds"
+    }
+  ],
   "audiences": [],
   "rollouts": [],
   "events": [],
   "experiments": [
     {
-      "id": "30",
-      "key": "test_experiment",
+      "id": "20",
+      "key": "simple_experiment",
       "layerId": "300",
       "status": "Running",
       "variations": [
@@ -18,18 +27,19 @@
           "featureEnabled": true,
           "variables": [
             {
-              "id": "3001",
-              "value": "variation_1"
+              "id": "2001",
+              "value": "first variation"
             }
           ]
         },
         {
           "id": "301",
           "key": "variation_two",
+          "featureEnabled": true,
           "variables": [
             {
-              "id": "3001",
-              "value": "variation_2"
+              "id": "2001",
+              "value": "second variation"
             }
           ]
         }
@@ -50,59 +60,29 @@
   ],
   "featureFlags": [
     {
-      "experimentIds": [],
+      "experimentIds": ["20"],
       "id": "2000",
-      "key": "test_feature",
+      "key": "simple_feature",
       "rolloutId": "",
       "variables": [
         {
-          "defaultValue": "true",
-          "id": "1",
-          "key": "test_string_no_default",
-          "type": "string"
-        },
-        {
-          "defaultValue": "true",
-          "id": "1",
-          "key": "test_string",
-          "type": "string"
-        },
-        {
-          "defaultValue": "1",
-          "id": "2",
-          "key": "test_double",
-          "type": "double"
-        },
-        {
-          "defaultValue": "false",
-          "id": "3",
-          "key": "test_boolean",
-          "type": "boolean"
-        },
-        {
-          "defaultValue": "false",
-          "id": "3",
-          "key": "test_integer",
-          "type": "integer"
-        },
-        {
-          "defaultValue": "false",
-          "id": "3",
-          "key": "test_enum",
+          "defaultValue": "default",
+          "id": "2001",
+          "key": "simple_string",
           "type": "string"
         }
       ]
     },
     {
-      "experimentIds": ["30"],
+      "experimentIds": [],
       "id": "3000",
-      "key": "test_interface",
+      "key": "simple_interface",
       "rolloutId": "",
       "variables": [
         {
-          "defaultValue": "",
+          "defaultValue": "default",
           "id": "3001",
-          "key": "variation_key",
+          "key": "simple_string",
           "type": "string"
         }
       ]

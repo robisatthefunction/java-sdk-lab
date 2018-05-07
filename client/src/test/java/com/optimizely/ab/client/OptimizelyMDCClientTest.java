@@ -174,6 +174,22 @@ public class OptimizelyMDCClientTest {
         assertNull(optimizelyMDCClient.getFeature(PrivateNonFeature.class));
     }
 
+    @Test
+    public void testGetFeatureWithVariation() throws Exception {
+        Optimizely optimizely = TestFeature.getTestOptimizely();
+        MDC.put("optimizelyEndUserId", "test_user");
+
+        OptimizelyRegistry registry = new OptimizelyRegistry();
+        registry.register(TestInterface.class);
+        registry.register(TestInterface.TestVariation1.class);
+        registry.register(TestInterface.TestVariation2.class);
+
+        OptimizelyMDCClient optimizelyMDCClient = new OptimizelyMDCClient(optimizely, registry);
+        TestInterface actual = optimizelyMDCClient.getFeature(TestInterface.class);
+        assertNotNull(actual);
+
+    }
+
     public static class NonFeatureDefaultConstructor {
         // Public will succeed in instantiating from OptimizelyClient.
     }

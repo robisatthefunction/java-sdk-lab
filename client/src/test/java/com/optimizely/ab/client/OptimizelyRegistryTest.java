@@ -18,6 +18,8 @@ public class OptimizelyRegistryTest {
     public void setUp() throws Exception {
         optimizelyRegistry = new OptimizelyRegistry();
         optimizelyRegistry.register(TestFeature.class);
+        optimizelyRegistry.register(TestInterface.class);
+        optimizelyRegistry.register(TestInterface.TestVariation1.class);
     }
 
     @Test
@@ -29,13 +31,21 @@ public class OptimizelyRegistryTest {
     @Test
     public void getItems() throws Exception {
         Set<Class> actual = optimizelyRegistry.getItems();
-        assertEquals(1, actual.size());
+        assertEquals(3, actual.size());
         assertTrue(actual.contains(TestFeature.class));
+        assertTrue(actual.contains(TestInterface.class));
+        assertTrue(actual.contains(TestInterface.TestVariation1.class));
     }
 
     @Test
     public void get() throws Exception {
         FeatureProcessor<TestFeature> featureProcessor = optimizelyRegistry.get(TestFeature.class);
+        assertNotNull(featureProcessor);
+    }
+
+    @Test
+    public void getVariation() throws Exception {
+        FeatureProcessor<TestInterface> featureProcessor = optimizelyRegistry.get(TestInterface.class, "variation_1");
         assertNotNull(featureProcessor);
     }
 

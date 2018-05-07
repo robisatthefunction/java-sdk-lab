@@ -28,7 +28,7 @@ public class OptimizelyValidator {
             FeatureProcessor<?> featureProcessor = registry.get(clazz);
             OptimizelyFeature optimizelyFeature = featureProcessor.getOptimizelyFeature();
 
-            if (!optimizelyFeature.validate()) {
+            if (optimizelyFeature == null || !optimizelyFeature.validate()) {
                 continue;
             }
 
@@ -36,7 +36,7 @@ public class OptimizelyValidator {
 
             FeatureFlag featureFlag = optimizely.getProjectConfig().getFeatureKeyMapping().get(featureName);
             if (featureFlag == null) {
-                LOG.error(featureName + "{} not a valid feature name.", featureName);
+                LOG.error("{} not a valid feature name.", featureName);
                 return false;
             }
 

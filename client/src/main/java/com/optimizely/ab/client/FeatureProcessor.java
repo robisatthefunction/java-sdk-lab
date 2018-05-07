@@ -5,11 +5,11 @@ import com.optimizely.ab.annotations.OptimizelyVariable;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import javax.annotation.Nonnull;
 import java.lang.reflect.Field;
 import java.util.HashMap;
 import java.util.Map;
 
-import static com.optimizely.ab.annotations.OptimizelyVariable.UNASSIGNED;
 
 /**
  * Currently you have to setup the classes to mirror the Optimizely data structures.
@@ -29,16 +29,12 @@ public class FeatureProcessor<T> {
     private final Map<Field, OptimizelyVariable> fields;
 
     public FeatureProcessor(Class<T> clazz) {
-        if (!clazz.isAnnotationPresent(OptimizelyFeature.class)) {
-            // eh
-            throw new RuntimeException();
-        }
-
         this.optimizelyFeature = clazz.getAnnotation(OptimizelyFeature.class);
         this.clazz = clazz;
-        this.fields = processFields(clazz);
+        this.fields = clazz.isInterface() ? new HashMap<>() : processFields(clazz);
     }
 
+    @Nonnull
     public Map<Field, OptimizelyVariable> getFieldVariableMap() {
         return fields;
     }
@@ -49,6 +45,11 @@ public class FeatureProcessor<T> {
 
     @SuppressWarnings("unchecked")
     public T newInstance(OptimizelyClient optimizelyClient) {
+        return newInstance(optimizelyClient, optimizelyFeature);
+    }
+
+    @SuppressWarnings("unchecked")
+    public T newInstance(OptimizelyClient optimizelyClient, OptimizelyFeature optimizelyFeature) {
         try {
             T instance = clazz.newInstance();
             String featureName = optimizelyFeature.name();
@@ -73,7 +74,7 @@ public class FeatureProcessor<T> {
                     }
                 }
 
-                if (type == String.class && !value.equals(UNASSIGNED)) {
+                if (type == String.class && !value.isEmpty()) {
                     defaultValue = value;
                 }
 
@@ -97,6 +98,15 @@ public class FeatureProcessor<T> {
         }
 
         return null;
+    }
+
+    // Returns the name of the variation if it exists.
+    public String getVariationName(OptimizelyClient optimizelyClient) {
+        // I want get variation for feature as a thing.
+        String featureName = optimizelyFeature.name();
+        String userIdKey = optimizelyFeature.userIdKey();
+        String variationKey = optimizelyFeature.variationKey();
+        return optimizelyClient.getFeatureVariable(featureName, variationKey, userIdKey, String.class);
     }
 
     private Map<Field, OptimizelyVariable> processFields(Class<T> clazz) {

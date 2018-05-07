@@ -8,8 +8,6 @@ import java.lang.annotation.*;
 @Retention(RetentionPolicy.RUNTIME)
 @Target({ElementType.FIELD})
 public @interface OptimizelyVariable {
-    String UNASSIGNED = "[unassigned]";
-
     /**
      * name used for the variable as part of the optimizely data file
      * @return String
@@ -20,7 +18,7 @@ public @interface OptimizelyVariable {
      * Default value
      * @return String
      */
-    String defaultValue() default UNASSIGNED;
+    String defaultValue() default "";
 
     /**
      * Provider used to convert the value into the corresponding data type

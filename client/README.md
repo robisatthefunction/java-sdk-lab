@@ -70,19 +70,19 @@ public class SampleApplication {
     private final ExampleFeature feature;
 
     public SampleApplication() {
-        OptimizelyClient optimizelyClient = OptimizelyClientFactory.get();
+        OptimizelyClient optimizelyClient = OptimizelyClientFactory.getClient();
         feature = optimizelyClient.getFeature(ExampleFeature.class);
     }
 
-    public void whichFeature() {
+    public String whichFeature() {
         return feature.toString();
     }
 
-    public static main(String[] args) {
+    public static void main(String[] args) throws Exception {
         String datafile = args[0];
 
-        EventDispatcher eventDispacher = new AsyncEventDispacter();
-        Optimizely optimizely = Optimizely.builder(datafile, eventDispatcher);
+        EventHandler eventHandler = System.out::println;
+        Optimizely optimizely = Optimizely.builder(datafile, eventHandler).build();
 
         OptimizelyRegistry registry = OptimizelyRegistry.get();
         OptimizelyValidator validator = new OptimizelyValidator(registry);
@@ -93,13 +93,12 @@ public class SampleApplication {
         }
 
         OptimizelyClient client = new OptimizelyMDCClient(optimizely, registry);
-        OptimizelyClientFactory.setProvider(() -> { return client;} );
+        OptimizelyClientFactory.setProvider(() -> client);
 
         SampleApplication sampleApplication = new SampleApplication();
         System.out.println(sampleApplication.whichFeature());
     }
 }
-
 ```
 
 ## Context
@@ -121,8 +120,8 @@ experiemnts as well as segmentation qualifiers for results.
 Features are a core building block of the Optimizely fullstack product and provide the basis
 for rollouts and experimentation. A feature can be as simple as boolean value, or as complex as a fork in business logic.
 
-This package provides two annotations for managing features and feature variables within your application.
-The purpose of these annotation is to provide an explicit, declarative linking between the entities
+This package provides three annotations for managing features and feature variables within your application.
+The purpose of these annotations is to provide an explicit, declarative linking between the entities
 setup within Optimizely Platform and their POJO counterparts. 
 
 ## Registry
@@ -153,7 +152,6 @@ definitions exist as part of the provided `Optimizely` instance.
 
 Hopefully this project will continue to be in active development. Here are just a few enhancements
 we'd like to implement in the near future.
-
-* Anything that be extracted as an interface can be expressed as a feature. 
+ 
 * Generate Optimizely entities from annotated classes.
 * Pluggable validators.

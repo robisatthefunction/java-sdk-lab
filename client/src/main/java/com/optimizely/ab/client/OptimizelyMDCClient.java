@@ -117,7 +117,6 @@ public class OptimizelyMDCClient implements OptimizelyClient {
         Set<String> userIdSet = new HashSet<>();
 
         if (userIds == null || userIds.isEmpty()) {
-            LOG.info("Not tracking {}, since userIds have not been initialized.");
             return userIdSet;
         }
 
@@ -159,7 +158,19 @@ public class OptimizelyMDCClient implements OptimizelyClient {
             }
         }
 
-        return processor.newInstance(this);
+        String variationName = processor.getVariationName(this);
+        if (variationName == null) {
+            return processor.newInstance(this);
+        }
+
+        FeatureProcessor<T> variationProcessor = registry.get(clazz, variationName);
+
+        if (variationProcessor == null) {
+            LOG.info("{} is NOT registered for Variation {}. Returning null.", clazz, variationName);
+            return null;
+        }
+
+        return variationProcessor.newInstance(this, processor.getOptimizelyFeature());
     }
 
     @Override
