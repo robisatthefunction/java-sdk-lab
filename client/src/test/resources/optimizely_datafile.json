@@ -70,8 +70,20 @@
         {
           "defaultValue": "1",
           "id": "2",
+          "key": "test_double_no_default",
+          "type": "double"
+        },
+        {
+          "defaultValue": "1",
+          "id": "2",
           "key": "test_double",
           "type": "double"
+        },
+        {
+          "defaultValue": "false",
+          "id": "3",
+          "key": "test_boolean_no_default",
+          "type": "boolean"
         },
         {
           "defaultValue": "false",
@@ -81,13 +93,25 @@
         },
         {
           "defaultValue": "false",
-          "id": "3",
+          "id": "4",
+          "key": "test_integer_no_default",
+          "type": "integer"
+        },
+        {
+          "defaultValue": "false",
+          "id": "4",
           "key": "test_integer",
           "type": "integer"
         },
         {
           "defaultValue": "false",
-          "id": "3",
+          "id": "5",
+          "key": "test_enum_no_default",
+          "type": "string"
+        },
+        {
+          "defaultValue": "false",
+          "id": "5",
           "key": "test_enum",
           "type": "string"
         }

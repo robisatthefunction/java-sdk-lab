@@ -65,17 +65,40 @@ public class FeatureProcessor<T> {
 
                 Object defaultValue = null;
 
-                // Yes this is a hack. There has to be a better way. Probably where the Provider comes in :)
-                if (type.isEnum()) {
-                    try {
-                        defaultValue = Enum.valueOf((Class<Enum>)type, value);
-                    } catch (IllegalArgumentException e) {
-                        LOG.warn("{} is not a value enum value for {}", value, type);
+                if (!value.isEmpty()) {
+                    // Yes this is a hack. There has to be a better way. Probably where the Provider comes in :)
+                    if (type.isEnum()) {
+                        try {
+                            defaultValue = Enum.valueOf((Class<Enum>)type, value);
+                        } catch (IllegalArgumentException e) {
+                            LOG.warn("{} is not a value enum value for {}", value, type);
+                        }
                     }
-                }
 
-                if (type == String.class && !value.isEmpty()) {
-                    defaultValue = value;
+                    if (type == String.class) {
+                        defaultValue = value;
+                    }
+
+                    if (type == Integer.class) {
+                        try {
+                            defaultValue = Integer.parseInt(value);
+                        } catch (NumberFormatException e) {
+                            LOG.warn("{} is not an Integer", value);
+                        }
+                    }
+
+                    if (type == Double.class) {
+                        try {
+                            defaultValue = Double.parseDouble(value);
+                        } catch (NumberFormatException e) {
+                            LOG.warn("{} is not an Integer", value);
+                            e.printStackTrace();
+                        }
+                    }
+
+                    if (type == Boolean.class) {
+                        defaultValue = Boolean.parseBoolean(value);
+                    }
                 }
 
                 if (isEnabled) {

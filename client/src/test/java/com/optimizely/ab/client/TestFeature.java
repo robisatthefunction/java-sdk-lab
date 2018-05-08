@@ -41,12 +41,24 @@ public class TestFeature {
     @OptimizelyVariable(name = "test_double", defaultValue = "0.01")
     public Double testDouble;
 
+    @OptimizelyVariable(name = "test_double_no_default")
+    public Double testDoubleWithoutDefault;
+
     @OptimizelyVariable(name = "test_boolean", defaultValue = "true")
     public Boolean testBoolean;
+
+    @OptimizelyVariable(name = "test_boolean_no_default")
+    public Boolean testBooleanWithoutDefault;
 
     @OptimizelyVariable(name = "test_integer", defaultValue = "10")
     public Integer testInteger;
 
+    @OptimizelyVariable(name = "test_integer_no_default")
+    public Integer testIntegerWithoutDefault;
+
     @OptimizelyVariable(name = "test_enum", defaultValue = "VALUE_1")
     public FeatureProcessorTest.TestEnum testEnum;
+
+    @OptimizelyVariable(name = "test_enum_no_default")
+    public FeatureProcessorTest.TestEnum testEnumWithoutDefault;
 }
