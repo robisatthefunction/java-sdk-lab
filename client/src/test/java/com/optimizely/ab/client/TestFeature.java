@@ -12,6 +12,8 @@ import com.optimizely.ab.event.LogEvent;
 import java.io.IOException;
 import java.net.URL;
 
+import static com.optimizely.ab.client.FeatureProcessorTest.TestEnum.VALUE_1;
+
 /**
  * Created by mdavis on 4/2/18.
  */
@@ -32,33 +34,18 @@ public class TestFeature {
         }).build();
     }
 
-    @OptimizelyVariable(name = "test_string_no_default")
-    public String testStringWithoutDefault;
+    @OptimizelyVariable(name = "test_string")
+    public String testString = "default";
 
-    @OptimizelyVariable(name = "test_string", defaultValue = "default")
-    public String testString;
+    @OptimizelyVariable(name = "test_double")
+    public Double testDouble = 0.01;
 
-    @OptimizelyVariable(name = "test_double", defaultValue = "0.01")
-    public Double testDouble;
+    @OptimizelyVariable(name = "test_boolean")
+    public Boolean testBoolean = true;
 
-    @OptimizelyVariable(name = "test_double_no_default")
-    public Double testDoubleWithoutDefault;
+    @OptimizelyVariable(name = "test_integer")
+    public Integer testInteger = 10;
 
-    @OptimizelyVariable(name = "test_boolean", defaultValue = "true")
-    public Boolean testBoolean;
-
-    @OptimizelyVariable(name = "test_boolean_no_default")
-    public Boolean testBooleanWithoutDefault;
-
-    @OptimizelyVariable(name = "test_integer", defaultValue = "10")
-    public Integer testInteger;
-
-    @OptimizelyVariable(name = "test_integer_no_default")
-    public Integer testIntegerWithoutDefault;
-
-    @OptimizelyVariable(name = "test_enum", defaultValue = "VALUE_1")
-    public FeatureProcessorTest.TestEnum testEnum;
-
-    @OptimizelyVariable(name = "test_enum_no_default")
-    public FeatureProcessorTest.TestEnum testEnumWithoutDefault;
+    @OptimizelyVariable(name = "test_enum")
+    public FeatureProcessorTest.TestEnum testEnum = VALUE_1;
 }

@@ -10,8 +10,8 @@ import com.optimizely.ab.annotations.OptimizelyVariable;
 @OptimizelyFeature(name = "simple_feature", userIdKey = "user_key")
 public class SimpleFeature  {
 
-    @OptimizelyVariable(name = "simple_string", defaultValue = "default")
-    public String simpleString;
+    @OptimizelyVariable(name = "simple_string")
+    public String simpleString = "default";
 
     @Override
     public String toString() {

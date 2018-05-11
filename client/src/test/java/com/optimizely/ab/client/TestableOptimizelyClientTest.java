@@ -83,6 +83,17 @@ public class TestableOptimizelyClientTest {
     }
 
     @Test
+    public void provideFeature() throws Exception {
+        TestFeature testFeature = new TestFeature();
+        testFeature.testString = "non-default";
+
+        assertNotEquals(testFeature, optimizelyClient.getFeature(TestFeature.class));
+
+        optimizelyClient.provideFeature(testFeature);
+        assertEquals(testFeature, optimizelyClient.getFeature(TestFeature.class));
+    }
+
+    @Test
     public void getFeatureVariable() throws Exception {
         // TODO make this work
         assertNull(optimizelyClient.getFeatureVariable("feature", "variable", "user", Long.class));

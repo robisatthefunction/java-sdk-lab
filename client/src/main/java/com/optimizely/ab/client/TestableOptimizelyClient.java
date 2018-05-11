@@ -15,6 +15,7 @@ public class TestableOptimizelyClient implements OptimizelyClient {
     private List<Long> revenues = new ArrayList<>();
     private List<Double> values = new ArrayList<>();
     private Map<String, Variation> variationMap = new HashMap<>();
+    private Map<Class<?>, Object> providedFeatures = new HashMap<>();
     private Set<String> enabledFeatures = new HashSet<>();
 
     @Override
@@ -43,8 +44,15 @@ public class TestableOptimizelyClient implements OptimizelyClient {
     }
 
     @Override
+    @SuppressWarnings("unchecked")
     public <T> T getFeature(Class<T> clazz) {
         FeatureProcessor<T> processor = new FeatureProcessor<>(clazz);
+
+        if (providedFeatures.containsKey(clazz)) {
+            activations.add(processor.getOptimizelyFeature().name());
+            return (T) providedFeatures.get(clazz);
+        }
+
         return processor.newInstance(this);
     }
 
@@ -74,6 +82,10 @@ public class TestableOptimizelyClient implements OptimizelyClient {
 
     public void enableFeature(String feature) {
         enabledFeatures.add(feature);
+    }
+
+    public void provideFeature(Object instance) {
+        providedFeatures.put(instance.getClass(), instance);
     }
 
     public List<String> getActivations() {

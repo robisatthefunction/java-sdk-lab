@@ -38,7 +38,7 @@ public class OptimizelyClientFactory {
         }
     }
 
-    private static class EmptyClient implements OptimizelyClient {
+    public static class EmptyClient implements OptimizelyClient {
 
         @Override
         public Variation activate(String experimentKey, String userIdKey) {

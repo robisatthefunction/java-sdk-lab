@@ -37,19 +37,10 @@ public class FeatureProcessorTest {
         TestFeature actual = featureProcessor.newInstance(optimizelyClient);
         assertNotNull(actual);
 
-        assertNull(actual.testDoubleWithoutDefault);
         assertEquals(0.01, actual.testDouble, 0.0001);
-
-        assertNull(actual.testBooleanWithoutDefault);
         assertEquals(Boolean.TRUE, actual.testBoolean);
-
-        assertNull(actual.testIntegerWithoutDefault);
         assertEquals(10, actual.testInteger.intValue());
-
-        assertNull(actual.testStringWithoutDefault);
         assertEquals("default", actual.testString);
-
-        assertNull(actual.testEnumWithoutDefault);
         assertEquals(TestEnum.VALUE_1, actual.testEnum);
     }
 

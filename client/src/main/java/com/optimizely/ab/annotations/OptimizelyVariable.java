@@ -13,17 +13,4 @@ public @interface OptimizelyVariable {
      * @return String
      */
     String name();
-
-    /**
-     * Default value
-     * @return String
-     */
-    String defaultValue() default "";
-
-    /**
-     * Provider used to convert the value into the corresponding data type
-     * @return Class
-     * TODO - IMPLEMENT ME
-     */
-    Class provider() default Void.class;
 }

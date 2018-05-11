@@ -35,11 +35,11 @@ public class EmailApplication {
     @OptimizelyFeature(name = "welcome_email")
     public static class EmailModel {
 
-        @OptimizelyVariable(name = "subject_key", defaultValue = "Welcome to Optimizely!!")
-        public String subject;
+        @OptimizelyVariable(name = "subject_key")
+        public String subject = "Welcome to Optimizely!!";
 
-        @OptimizelyVariable(name = "body_key", defaultValue = "Click here.")
-        public String body;
+        @OptimizelyVariable(name = "body_key")
+        public String body = "Click here.";
 
         public String recipient;
     }

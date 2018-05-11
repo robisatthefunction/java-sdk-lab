@@ -56,61 +56,18 @@ public class FeatureProcessor<T> {
             String userIdKey = optimizelyFeature.userIdKey();
             boolean isEnabled = optimizelyClient != null && optimizelyClient.isFeatureEnabled(featureName, userIdKey);
 
+            if (!isEnabled) {
+                return instance;
+            }
+
             for (Map.Entry<Field, OptimizelyVariable> entry: fields.entrySet()) {
                 Field field = entry.getKey();
                 OptimizelyVariable optimizelyVariable = entry.getValue();
-
-                String value = optimizelyVariable.defaultValue();
                 Class<?> type = field.getType();
 
-                Object defaultValue = null;
-
-                if (!value.isEmpty()) {
-                    // Yes this is a hack. There has to be a better way. Probably where the Provider comes in :)
-                    if (type.isEnum()) {
-                        try {
-                            defaultValue = Enum.valueOf((Class<Enum>)type, value);
-                        } catch (IllegalArgumentException e) {
-                            LOG.warn("{} is not a value enum value for {}", value, type);
-                        }
-                    }
-
-                    if (type == String.class) {
-                        defaultValue = value;
-                    }
-
-                    if (type == Integer.class) {
-                        try {
-                            defaultValue = Integer.parseInt(value);
-                        } catch (NumberFormatException e) {
-                            LOG.warn("{} is not an Integer", value);
-                        }
-                    }
-
-                    if (type == Double.class) {
-                        try {
-                            defaultValue = Double.parseDouble(value);
-                        } catch (NumberFormatException e) {
-                            LOG.warn("{} is not an Integer", value);
-                            e.printStackTrace();
-                        }
-                    }
-
-                    if (type == Boolean.class) {
-                        defaultValue = Boolean.parseBoolean(value);
-                    }
-                }
-
-                if (isEnabled) {
-                    Object object = optimizelyClient.getFeatureVariable(featureName, optimizelyVariable.name(), userIdKey, type);
-                    if (object != null) {
-                        field.set(instance, object);
-                        continue;
-                    }
-                }
-
-                if (defaultValue != null) {
-                    field.set(instance, defaultValue);
+                Object object = optimizelyClient.getFeatureVariable(featureName, optimizelyVariable.name(), userIdKey, type);
+                if (object != null) {
+                    field.set(instance, object);
                 }
             }
 
