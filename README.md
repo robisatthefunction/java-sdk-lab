@@ -1,3 +1,6 @@
+[![Build Status](https://travis-ci.com/optimizely/java-sdk-lab.svg?token=y3xM1z7bQsqHX2NTEhps&branch=master)](https://travis-ci.com/optimizely/java-sdk-lab)
+[![Coverage Status](https://coveralls.io/repos/github/optimizely/java-sdk-lab/badge.svg?branch=master&t=MNkW7x)](https://coveralls.io/github/optimizely/java-sdk-lab?branch=master)
+
 # java-sdk-lab
 
 Lab is meant to serve as a launch pad for experimental additions to the main line java-sdk.
@@ -29,10 +32,10 @@ All deployments to production must be on release versions. This includes service
 To trigger a release:
 
 - Make sure you are on master branch and your local repo is clean.
-- `./gradlew <sub-module>:release`
--- Note: you can only release on a sub-module basis. Running release on the entire project will fail.
-- As prompted, pick a release version. By default it's the current version without the -SNAPSHOT suffix.
-- As prompted, pick a new version. By default it's an incremented version with the -SNAPSHOT suffix.
+- `./gradlew clean release -Prelease.useAutomaticVersion=true`
+-- Note: you can remove the automatic versioning and will prompted as follows.
+- Pick a release version. By default it's the current version without the -SNAPSHOT suffix.
+- Pick a new version. By default it's an incremented version with the -SNAPSHOT suffix.
 
 The version change and git tag is performed automatically. A Travis build will also be triggered for the release version
 automatically.

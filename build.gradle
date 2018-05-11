@@ -10,7 +10,7 @@ buildscript {
                 logbackVersion: '1.1.7',
                 mockitoVersion: '1.9.5',
                 reflectionsVersion: '0.9.9-RC1',
-                researchGateReleaseVersion: '2.3.4',
+                researchGateReleaseVersion: '2.6.0',
                 slf4jVersion: '1.7.16',
         ]
 
@@ -34,25 +34,24 @@ buildscript {
 }
 
 apply plugin: 'idea'
+apply plugin: 'base'
+apply plugin: 'net.researchgate.release'
+
+release {
+    newVersionCommitMessage = '[Gradle Release Plugin][ci skip] - new version commit: '
+}
 
 subprojects {
     apply plugin: 'com.github.kt3k.coveralls'
-    apply plugin: 'idea'
     apply plugin: 'java'
     apply plugin: 'jacoco'
     apply plugin: 'findbugs'
     apply plugin: 'maven-publish'
-    apply plugin: 'net.researchgate.release'
 
     sourceCompatibility = 1.8
     targetCompatibility = 1.8
 
     group = 'com.optimizely.ab'
-
-    release {
-        tagTemplate = '$name-$version'
-        newVersionCommitMessage = '[Gradle Release Plugin][ci skip] - new version commit: '
-    }
 
     repositories {
         mavenLocal()
@@ -124,10 +123,6 @@ subprojects {
 
     artifacts {
         archives sourcesJar, javadocJar
-    }
-
-    task printVersion << {
-        println project.version
     }
 }
 

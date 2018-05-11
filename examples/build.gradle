@@ -16,3 +16,7 @@ task runEmailApplication(type: JavaExec) {
     classpath files("etc") + sourceSets.main.runtimeClasspath
     main = "com.optimizely.ab.examples.EmailApplication"
 }
+
+release {
+    failOnSnapshotDependencies = false  // Needed to allow depending on client
+}
