@@ -1,0 +1,11 @@
+# Docs: https://github.com/codecov/support/wiki/Codecov-Yaml#full-yaml
+# Validation: curl --data-binary @codecov.yml https://codecov.io/validate
+
+coverage:
+  status:
+    project:
+      default:
+        threshold: 0.05
+    patch:
+      default:
+        threshold: 0.05

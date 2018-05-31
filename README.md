@@ -1,5 +1,5 @@
 [![Build Status](https://travis-ci.com/optimizely/java-sdk-lab.svg?token=y3xM1z7bQsqHX2NTEhps&branch=master)](https://travis-ci.com/optimizely/java-sdk-lab)
-[![Coverage Status](https://coveralls.io/repos/github/optimizely/java-sdk-lab/badge.svg?branch=master&t=MNkW7x)](https://coveralls.io/github/optimizely/java-sdk-lab?branch=master)
+[![codecov](https://codecov.io/gh/optimizely/java-sdk-lab/branch/master/graph/badge.svg?token=WpuFvPnYuh)](https://codecov.io/gh/optimizely/java-sdk-lab)
 
 # java-sdk-lab
 

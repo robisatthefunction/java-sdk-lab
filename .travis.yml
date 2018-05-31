@@ -24,4 +24,5 @@ deploy:
   on:
     branch: master
 after_success:
-  - ./gradlew jacocoTestReport coveralls
+  - ./gradlew jacocoTestReport
+  - ./.codecov
