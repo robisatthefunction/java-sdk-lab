@@ -26,7 +26,8 @@ public class OptimizelyMDCClient implements OptimizelyClient {
 
     static final String USER_IDS_KEY = "userIds";
 
-    private static final String DELIMITER = "\\|";
+    private static final String DELIMITER_PATTERN = "\\|";
+    private static final String DELIMITER = "|";
 
     private final Optimizely optimizely;
     private final OptimizelyRegistry registry;
@@ -120,7 +121,7 @@ public class OptimizelyMDCClient implements OptimizelyClient {
             return userIdSet;
         }
 
-        for (String userId: userIds.split(DELIMITER)) {
+        for (String userId: userIds.split(DELIMITER_PATTERN)) {
             userIdSet.add(userId);
         }
 
@@ -128,13 +129,18 @@ public class OptimizelyMDCClient implements OptimizelyClient {
     }
 
     private void setUserIds(Set<String> userIds) {
-        String userIdString = null;
+        StringBuffer userIdStringBuffer = null;
         for (String userId: userIds) {
-            userIdString = userIdString == null ? userId : DELIMITER + userId;
+            if (userIdStringBuffer == null) {
+                userIdStringBuffer = new StringBuffer(userId);
+            } else {
+                userIdStringBuffer.append(DELIMITER);
+                userIdStringBuffer.append(userId);
+            }
         }
 
-        if (userIdString != null) {
-            MDC.put(USER_IDS_KEY, userIdString);
+        if (userIdStringBuffer != null) {
+            MDC.put(USER_IDS_KEY, userIdStringBuffer.toString());
         }
     }
 

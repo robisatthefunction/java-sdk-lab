@@ -81,6 +81,22 @@ public class OptimizelyMDCClientTest {
     }
 
     @Test
+    public void testTrackMultipleUsers() {
+        MDC.put(OPTIMIZELY_END_USER_ID_KEY + "2", END_USER_ID + "2");
+        expectedAttributes.put(OPTIMIZELY_END_USER_ID_KEY + "2", END_USER_ID + "2");
+        expectedAttributes.put(USER_IDS_KEY, END_USER_ID + "|" + END_USER_ID + "2");
+
+        optimizelyClient.activate(EXPERIMENT_KEY, OPTIMIZELY_END_USER_ID_KEY);
+        optimizelyClient.activate(EXPERIMENT_KEY + "2", OPTIMIZELY_END_USER_ID_KEY + "2");
+        optimizelyClient.track("MY_REVENUE_EVENT");
+
+
+        Map<String, Long> tags = Collections.emptyMap();
+        Mockito.verify(optimizely, Mockito.times(1)).track("MY_REVENUE_EVENT", END_USER_ID, expectedAttributes, tags);
+        Mockito.verify(optimizely, Mockito.times(1)).track("MY_REVENUE_EVENT", END_USER_ID + "2", expectedAttributes, tags);
+    }
+
+    @Test
     public void testTrackRevenue() {
         optimizelyClient.activate(EXPERIMENT_KEY, OPTIMIZELY_END_USER_ID_KEY);
         optimizelyClient.track("MY_REVENUE_EVENT", 100L);
