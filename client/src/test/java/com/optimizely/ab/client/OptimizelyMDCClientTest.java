@@ -147,6 +147,24 @@ public class OptimizelyMDCClientTest {
     }
 
     @Test
+    public void testGetFeatureVariablePrimitiveDoublePrimitive() {
+        optimizelyClient.getFeatureVariable(FEATURE_FLAG_KEY, FEATURE_VARIABLE_KEY, OPTIMIZELY_END_USER_ID_KEY, double.class);
+        Mockito.verify(optimizely, Mockito.only()).getFeatureVariableDouble(FEATURE_FLAG_KEY, FEATURE_VARIABLE_KEY, END_USER_ID, expectedAttributes);
+    }
+
+    @Test
+    public void testGetFeatureVariablePrimitiveIntPrimitive() {
+        optimizelyClient.getFeatureVariable(FEATURE_FLAG_KEY, FEATURE_VARIABLE_KEY, OPTIMIZELY_END_USER_ID_KEY, int.class);
+        Mockito.verify(optimizely, Mockito.only()).getFeatureVariableInteger(FEATURE_FLAG_KEY, FEATURE_VARIABLE_KEY, END_USER_ID, expectedAttributes);
+    }
+
+    @Test
+    public void testGetFeatureVariablePrimitiveBoolean() {
+        optimizelyClient.getFeatureVariable(FEATURE_FLAG_KEY, FEATURE_VARIABLE_KEY, OPTIMIZELY_END_USER_ID_KEY, boolean.class);
+        Mockito.verify(optimizely, Mockito.only()).getFeatureVariableBoolean(FEATURE_FLAG_KEY, FEATURE_VARIABLE_KEY, END_USER_ID, expectedAttributes);
+    }
+
+    @Test
     public void testGetFeatureVariableEnumPositive() {
         Mockito.when(optimizely.getFeatureVariableString(Mockito.anyString(), Mockito.anyString(), Mockito.anyString(), Matchers.any())).thenReturn("VALID");
         TestEnum actual = optimizelyClient.getFeatureVariable(FEATURE_FLAG_KEY, FEATURE_VARIABLE_KEY, OPTIMIZELY_END_USER_ID_KEY, TestEnum.class);

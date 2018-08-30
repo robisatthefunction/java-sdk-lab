@@ -217,11 +217,11 @@ public class OptimizelyMDCClient implements OptimizelyClient {
 
         if (clazz == String.class) {
             return (T) optimizely.getFeatureVariableString(featureFlagKey, variableKey, userId, getAttributes());
-        } else if (clazz == Double.class) {
+        } else if (clazz == Double.class || clazz == double.class) {
             return (T) optimizely.getFeatureVariableDouble(featureFlagKey, variableKey, userId, getAttributes());
-        } else if (clazz == Boolean.class) {
+        } else if (clazz == Boolean.class || clazz == boolean.class) {
             return (T) optimizely.getFeatureVariableBoolean(featureFlagKey, variableKey, userId, getAttributes());
-        } else if (clazz == Integer.class) {
+        } else if (clazz == Integer.class || clazz == int.class) {
             return (T) optimizely.getFeatureVariableInteger(featureFlagKey, variableKey, userId, getAttributes());
         } else if (clazz.isEnum()) {
             String enumName = optimizely.getFeatureVariableString(featureFlagKey, variableKey, userId, getAttributes());
