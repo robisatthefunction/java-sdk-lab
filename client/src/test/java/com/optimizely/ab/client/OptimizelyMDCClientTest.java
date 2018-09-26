@@ -19,6 +19,7 @@ import java.util.Map;
 import static com.optimizely.ab.client.OptimizelyClient.OPTIMIZELY_END_USER_ID_KEY;
 import static com.optimizely.ab.client.OptimizelyMDCClient.USER_IDS_KEY;
 import static junit.framework.TestCase.assertNull;
+import static junit.framework.TestCase.assertSame;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotNull;
 
@@ -57,6 +58,11 @@ public class OptimizelyMDCClientTest {
     @After
     public void tearDown() {
         MDC.clear();
+    }
+
+    @Test
+    public void testGetClient() {
+        assertSame(optimizely, optimizelyClient.getOptimizely());
     }
 
     @Test

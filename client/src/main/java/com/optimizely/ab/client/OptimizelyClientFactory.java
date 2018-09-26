@@ -1,7 +1,9 @@
 package com.optimizely.ab.client;
 
+import com.optimizely.ab.Optimizely;
 import com.optimizely.ab.config.Variation;
 
+import javax.annotation.Nullable;
 import java.util.Map;
 
 /**
@@ -21,9 +23,12 @@ public class OptimizelyClientFactory {
 
     private static OptimizelyClientProvider overrideProvider;
 
+    public static OptimizelyClientProvider getClientProvider() {
+        return overrideProvider == null ? defaultProvider : overrideProvider;
+    }
 
     public static OptimizelyClient getClient() {
-        return overrideProvider == null ? defaultProvider.get() : overrideProvider.get();
+        return getClientProvider().get();
     }
 
     public static void setProvider(OptimizelyClientProvider optimizelyClientProvider) {
@@ -78,6 +83,12 @@ public class OptimizelyClientFactory {
 
         @Override
         public <T> T getFeatureVariable(String featureFlagKey, String variableKey, String userIdKey, Class<T> clazz) {
+            return null;
+        }
+
+        @Nullable
+        @Override
+        public Optimizely getOptimizely() {
             return null;
         }
     }

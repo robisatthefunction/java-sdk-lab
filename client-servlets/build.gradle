@@ -1,0 +1,10 @@
+archivesBaseName = 'optimizely-sdk-client-servlets'
+
+
+dependencies {
+    compile project(':client')
+    compileOnly 'javax.servlet:javax.servlet-api:3.0.1'
+    compileOnly group: 'com.fasterxml.jackson.core', name: 'jackson-databind', version: deps.jacksonVersion
+
+    testCompile 'org.eclipse.jetty:jetty-servlet:9.2.26.v20180806'
+}

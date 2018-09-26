@@ -236,4 +236,10 @@ public class OptimizelyMDCClient implements OptimizelyClient {
             return null;
         }
     }
+
+    @Nullable
+    @Override
+    public Optimizely getOptimizely() {
+        return optimizely;
+    }
 }

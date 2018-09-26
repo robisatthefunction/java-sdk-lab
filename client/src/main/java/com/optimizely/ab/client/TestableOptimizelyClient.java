@@ -1,7 +1,9 @@
 package com.optimizely.ab.client;
 
+import com.optimizely.ab.Optimizely;
 import com.optimizely.ab.config.Variation;
 
+import javax.annotation.Nullable;
 import java.util.*;
 
 /**
@@ -110,5 +112,11 @@ public class TestableOptimizelyClient implements OptimizelyClient {
         revenues.clear();
         activations.clear();
         variationMap.clear();
+    }
+
+    @Nullable
+    @Override
+    public Optimizely getOptimizely() {
+        return null;
     }
 }

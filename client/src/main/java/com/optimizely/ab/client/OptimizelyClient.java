@@ -1,7 +1,9 @@
 package com.optimizely.ab.client;
 
+import com.optimizely.ab.Optimizely;
 import com.optimizely.ab.config.Variation;
 
+import javax.annotation.Nullable;
 import java.util.Map;
 
 /**
@@ -26,4 +28,10 @@ public interface OptimizelyClient {
 
     <T> T getFeature(Class<T> clazz);
     <T> T getFeatureVariable(String featureFlagKey, String variableKey, String userIdKey, Class<T> clazz);
+
+    /**
+     * @return the underlying {@link Optimizely} SDK instance or null if unavailable
+     */
+    @Nullable
+    Optimizely getOptimizely();
 }
